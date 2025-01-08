@@ -1,4 +1,4 @@
-# Install script for directory: /Users/anahata/AndroidStudioProjects/PotterPedia/DataCore/src/main/cpp
+# Install script for directory: /Users/anahata/AndroidStudioProjects/PotterPediaApplication/DataCore/src/main/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/anahata/AndroidStudioProjects/PotterPedia/DataCore/.cxx/Debug/v1e5q6g4/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/anahata/AndroidStudioProjects/PotterPediaApplication/DataCore/.cxx/Debug/v1e5q6g4/arm64-v8a/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

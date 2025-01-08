@@ -47,7 +47,27 @@ data class CharacterResponse(
     val alive: String? = null,
     @SerialName("image")
     val image: String? = null,
-)
+) {
+    fun toCharacterData(): Character? {
+        return if (id != null) {
+            Character(
+                id = id,
+                name = name,
+                actorName = actor,
+                species = species,
+                gender = gender,
+                house = house,
+                dateOfBirth = dateOfBirth,
+                patronus = patronus,
+                alive = alive,
+                wand = wand?.toWandData(),
+                imageUrl = image
+            )
+        } else {
+            null
+        }
+    }
+}
 
 @Serializable
 data class WandResponse(
@@ -57,4 +77,12 @@ data class WandResponse(
     val core: String? = null,
     @SerialName("length")
     val length: String? = null,
-)
+) {
+    fun toWandData(): Wand? {
+        return if (wood != null && core != null && length != null) {
+            Wand(wood, core, length)
+        } else {
+            null
+        }
+    }
+}

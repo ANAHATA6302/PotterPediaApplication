@@ -1,68 +1,51 @@
 package com.akshit.potterpedia
 
+import landingPage.ui.LandingScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.akshit.datacore.CharacterRepository
-import com.akshit.datacore.NativeLib
 import com.akshit.potterpedia.ui.theme.PotterPediaTheme
 import kotlinx.coroutines.launch
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
 class MainActivity : ComponentActivity() {
+    private lateinit var navHostController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val repos = CharacterRepository(baseContext)
-        lifecycleScope.launch {
-            val dataOut = repos.fetchCharacters()
-            dataOut.forEach {
-                println("Akshit - "+ it.name)
-            }
+        startKoin {
+            androidContext(this@MainActivity)
+            modules(appModule)
         }
         setContent {
-            PotterPediaTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+            navHostController = rememberNavController()
+            NavHost(navController = navHostController, startDestination = NavigationRoutes.LANDING_SCREEN.route) {
+                composable(NavigationRoutes.LANDING_SCREEN.route) { LandingScreen(navHostController) }
+                composable(NavigationRoutes.CHARACTER_INFO_SCREEN.route) {  }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Box(
-        modifier = Modifier.size(300.dp, 600.dp)
-    ) {
-        Text(
-            text = "Hello $name!",
-            modifier = modifier
-        )
-    }
-
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PotterPediaTheme {
-        Greeting("Android")
-    }
-}
 

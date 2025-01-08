@@ -13,7 +13,7 @@ class CharacterRepository (
         Context.MODE_PRIVATE
     )
 
-    suspend fun fetchCharacters(): List<CharacterResponse> {
+    suspend fun fetchCharacters(): List<Character?> {
         val cacheData = getCacheData()
         // also need to add the option to rewrite data to avoid duplication
         // i.e when a new fetch is done or user manually asks a refresh of data
@@ -26,36 +26,44 @@ class CharacterRepository (
         }
     }
 
+    suspend fun updateCache(): List<Character?> {
+        return if (!getCacheData().isEmpty()) {
+            val data = fetchFromApi()
+            sharedPreferences.edit().clear()
+            cacheData(characters = data)
+            data
+        } else {
+            emptyList()
+        }
+
+    }
+
     // Fetch from API
-    private suspend fun fetchFromApi(): List<CharacterResponse> {
+    private suspend fun fetchFromApi(): List<Character?> {
         return withContext(Dispatchers.IO) {
-            RetrofitInstance.apiService.getAllCharacters()
+            RetrofitInstance.apiService.getAllCharacters().map {
+                it.toCharacterData()
+            }
         }
     }
 
-//    private fun convertCharacterData(data: List<CharacterResponse>): List<Character?> {
-//        return data.flatMap { response ->
-//            if (response.id == null) {
-//                null
-//            } else {
-//
-//            }
-//        }
-//    }
-
     // Cache the fetched data in SharedPreferences
-    private fun cacheData(characters: List<CharacterResponse>) {
+    private fun cacheData(characters: List<Character?>) {
         sharedPreferences.edit().apply {
             putString("cached_characters", Gson().toJson(characters))
             apply()
         }
     }
 
+    private fun clearCache() {
+        sharedPreferences.edit().clear().apply()
+    }
+
     // Get cached data
-    private fun getCacheData(): List<CharacterResponse> {
+    private fun getCacheData(): List<Character> {
         val json = sharedPreferences.getString("cached_characters", null)
         return if (json != null) {
-            Gson().fromJson(json, Array<CharacterResponse>::class.java).toList()
+            Gson().fromJson(json, Array<Character>::class.java).toList()
         } else {
             emptyList()
         }

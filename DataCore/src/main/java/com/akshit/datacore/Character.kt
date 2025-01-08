@@ -16,14 +16,14 @@ package com.akshit.datacore
  */
 class Character (
     val id: String,
-    val name: String,
-    val actorName: String,
-    val species: String,
-    val gender: String,
+    val name: String?,
+    val actorName: String?,
+    val species: String?,
+    val gender: String?,
     val house: String?,
-    val dateOfBirth: String,
-    val patronus: String,
-    val alive: String,
+    val dateOfBirth: String?,
+    val patronus: String?,
+    val alive: String?,
     val wand: Wand?,
     val imageUrl: String? = null
 )

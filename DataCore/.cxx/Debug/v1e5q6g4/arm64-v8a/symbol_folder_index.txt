@@ -1,1 +1,1 @@
-/Users/anahata/AndroidStudioProjects/PotterPedia/DataCore/build/intermediates/cxx/Debug/v1e5q6g4/obj/arm64-v8a
+/Users/anahata/AndroidStudioProjects/PotterPediaApplication/DataCore/build/intermediates/cxx/Debug/v1e5q6g4/obj/arm64-v8a
