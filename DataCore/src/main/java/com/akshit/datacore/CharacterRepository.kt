@@ -29,7 +29,7 @@ class CharacterRepository (
     suspend fun updateCache(): List<Character?> {
         return if (!getCacheData().isEmpty()) {
             val data = fetchFromApi()
-            sharedPreferences.edit().clear()
+            sharedPreferences.edit().clear().apply()
             cacheData(characters = data)
             data
         } else {

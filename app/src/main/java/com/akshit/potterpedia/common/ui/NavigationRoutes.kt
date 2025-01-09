@@ -1,4 +1,4 @@
-package com.akshit.potterpedia
+package com.akshit.potterpedia.common.ui
 
 enum class NavigationRoutes(val route: String) {
     /**
