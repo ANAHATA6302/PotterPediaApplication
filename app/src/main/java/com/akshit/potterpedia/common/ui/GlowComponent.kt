@@ -7,21 +7,16 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.toArgb
 
-private const val GLOW_BLUR_PIXELS_PERCENT = 0.3f
+private const val GLOW_BLUR_PIXELS_PERCENT = 0.1f
 private const val GLOW_VERTICAL_OFFSET_PERCENT = 0.025f
-private const val GLOW_START_ALPHA = 0.5f
-private const val SHADOW_BLUR_PIXELS_PERCENT = 0.025f
-private const val SHADOW_VERTICAL_OFFSET_PERCENT = 0.025f
-private const val SHADOW_START_ALPHA = 0.25f
+private const val GLOW_START_ALPHA = 0.9f
+private const val SHADOW_BLUR_PIXELS_PERCENT = 0.085f
+private const val SHADOW_VERTICAL_OFFSET_PERCENT = 0.085f
+private const val SHADOW_START_ALPHA = 0.15f
 
-/**
- * The custom glow/shadow hybrid used by some charge composables
- */
 internal fun Modifier.chargeGlow(colorStops: List<Color>, radiusPx: Float): Modifier =
     this.drawBehind {
         drawIntoCanvas {
-            // Custom two level glow/shadow hybrid
-            // Glow
             val paint = Paint()
             paint
                 .asFrameworkPaint()

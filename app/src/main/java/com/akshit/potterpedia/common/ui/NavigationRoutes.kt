@@ -9,5 +9,13 @@ enum class NavigationRoutes(val route: String) {
     /**
      * Navigate to CharacterInfoScreen
      */
-    CHARACTER_INFO_SCREEN("CharacterInfoScreen"),
+    CHARACTER_INFO_SCREEN("CharacterInfoScreen/{characterId}"),
+
+    /**
+     * Navigate to InfoHelpScreen
+     */
+    HELP_INFO_SCREEN("HelpInfoScreen"),
+}
+fun buildScreen2Route(id: String): String {
+    return "CharacterInfoScreen/$id"
 }

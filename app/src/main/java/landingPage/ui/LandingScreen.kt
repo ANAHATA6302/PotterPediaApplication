@@ -1,5 +1,11 @@
 package landingPage.ui
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -14,6 +20,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,8 +31,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -34,8 +43,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.akshit.datacore.Character
 import com.akshit.potterpedia.R
+import com.akshit.potterpedia.common.ui.NavigationRoutes
 import com.akshit.potterpedia.common.ui.TopNavigationScaffold
 import com.akshit.potterpedia.common.ui.TopNavigationTitleContentScope
+import com.akshit.potterpedia.common.ui.buildScreen2Route
 import com.akshit.potterpedia.ui.theme.PotterPediaTheme
 import com.akshit.potterpedia.ui.theme.gaps
 import com.akshit.potterpedia.ui.theme.textSizes
@@ -49,15 +60,24 @@ fun LandingScreen(
     val viewModel: LandingScreenViewModel = koinViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
-    viewModel.fetchData()
+
     PotterPediaTheme {
-        Column (modifier = Modifier
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = { focusManager.clearFocus() })
-            }
-            .background(MaterialTheme.colorScheme.background)
-            .fillMaxSize()) {
+        Column (
+            modifier = Modifier
+                .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
+                    .background(MaterialTheme.colorScheme.background)
+                    .fillMaxSize()
+        ) {
             TopNavigationScaffold(
+                navigationIcon = {
+                    NavigationIcon(
+                        res = R.drawable.ic_refresh_24dp,
+                        modifier = Modifier.size(24.dp),
+                        contentDescription = "",
+                    ) {
+                        viewModel.updateCache()
+                    }
+                },
                 title = {
                    Column(
                        horizontalAlignment = Alignment.CenterHorizontally
@@ -82,12 +102,48 @@ fun LandingScreen(
                         modifier = Modifier.size(24.dp),
                         contentDescription = "",
                     ) {
-                        // on click open bottomSheet with Info
+                        navHostController.navigate(NavigationRoutes.HELP_INFO_SCREEN.route)
                     }
                 }
             )
-            CreateCharacterList(uiState.characterList)
+            if (uiState.isListLoaded) {
+                CreateCharacterList(
+                    uiState.characterList
+                ) {
+                    val route = buildScreen2Route(it)
+                    navHostController.navigate(route)
+                }
+            } else {
+                LoadingPage()
+            }
+
         }
+    }
+}
+
+@Composable
+private fun LoadingPage() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        val infiniteTransition = rememberInfiniteTransition(label = "LoaderTransitionTag")
+        val alpha by infiniteTransition.animateFloat(
+            initialValue = 0f,
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(
+                animation = tween(durationMillis = 1000, easing = LinearEasing),
+                repeatMode = RepeatMode.Reverse
+            ), label = "GlowAlphaTag"
+        )
+        Icon(
+            modifier = Modifier
+                .size(100.dp)
+                .graphicsLayer(alpha = alpha),
+            painter = painterResource(R.drawable.ic_harry_potter_logo_100dp),
+            tint = MaterialTheme.colorScheme.primary,
+            contentDescription = "",
+        )
     }
 }
 
@@ -104,6 +160,7 @@ private fun SearchBox(
         BasicTextField(
             value = searchQuery,
             onValueChange = onValueChange,
+            singleLine = true,
             textStyle = TextStyle(
                 color = MaterialTheme.colorScheme.primary,
                 fontSize = textSizes.s,
@@ -120,6 +177,7 @@ private fun SearchBox(
                     Text(
                         text = stringResource(R.string.search_hint),
                         fontSize = textSizes.s,
+                        maxLines = 1,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -131,7 +189,10 @@ private fun SearchBox(
 }
 
 @Composable
-private fun CreateCharacterList(list: List<Character?>) {
+private fun CreateCharacterList(
+    list: List<Character?>,
+    onCLick: (String) -> Unit,
+) {
     if (list.isNotEmpty()) {
         var searchQuery by remember { mutableStateOf(TextFieldValue("")) }
         var filteredList by remember { mutableStateOf(list) }
@@ -163,7 +224,10 @@ private fun CreateCharacterList(list: List<Character?>) {
                             characterImage = it.imageUrl?: "",
                             characterName = it.name?: "",
                             actorName = it.actorName?: "",
-                            characterHouse = it.house?: ""
+                            characterHouse = it.house?: "",
+                            species = it.species?: "",
+                            characterId = it.id,
+                            onCLick = onCLick
                         )
                     }
                 }

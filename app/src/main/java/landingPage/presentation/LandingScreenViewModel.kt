@@ -1,11 +1,11 @@
 package landingPage.presentation
 
-import android.content.Context
-import androidx.compose.ui.platform.LocalContext
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.akshit.datacore.Character
 import com.akshit.datacore.CharacterRepository
+import com.google.ar.core.exceptions.FatalException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -15,7 +15,8 @@ data class LandingScreenUiState(
     val characterList: List<Character?> = emptyList(),
     val imageUrl: String = "",
     val characterName: String = "",
-    val actorName: String = ""
+    val actorName: String = "",
+    val isListLoaded: Boolean = false,
 )
 
 class LandingScreenViewModel (
@@ -24,24 +25,33 @@ class LandingScreenViewModel (
     private val _uiState = MutableStateFlow(LandingScreenUiState())
     val uiState = _uiState.asStateFlow()
 
-    fun fetchData() {
+    fun updateCache() {
         viewModelScope.launch {
-            characterRepository.updateCache()
-            val dataOut = characterRepository.fetchCharacters()
-            _uiState.update {
-                it.copy(characterList = dataOut)
+            try {
+                characterRepository.updateCache()
+                fetchData()
+            } catch (e: FatalException) {
+                Log.e("LandingScreenViewModel", "Error Updating Data")
             }
-            dataOut.forEach {
-                println("Akshit - "+ it?.name)
-                println("Akshit - "+ it?.actorName)
-                println("Akshit - "+ it?.imageUrl)
-                println("Akshit - "+ it?.gender)
-                println("Akshit - "+ it?.alive)
-                println("Akshit - "+ it?.species)
-                println("Akshit - "+ it?.house)
-                println("Akshit - "+ it?.dateOfBirth)
-                println("Akshit - "+ it?.patronus)
-                println("Akshit - "+ it?.actorName)
+        }
+    }
+    init {
+        viewModelScope.launch {
+            fetchData()
+        }
+    }
+    private fun fetchData() {
+        viewModelScope.launch {
+            try {
+                val dataOut = characterRepository.fetchCharacters()
+                _uiState.update {
+                    it.copy(
+                        characterList = dataOut,
+                        isListLoaded = dataOut.isNotEmpty()
+                    )
+                }
+            } catch (e: FatalException) {
+                Log.e("LandingScreenViewModel", "Error Fetching Data")
             }
         }
     }

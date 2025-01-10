@@ -1,6 +1,7 @@
 package landingPage.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,11 +37,14 @@ import com.akshit.potterpedia.ui.theme.textSizes
 
 @Composable
 fun CharacterListItem(
-    modifier: Modifier = Modifier,
     characterImage: String,
     characterName: String,
     actorName: String,
     characterHouse: String,
+    species: String,
+    characterId: String,
+    onCLick: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -51,7 +55,10 @@ fun CharacterListItem(
                 bottom = gaps.xl
             )
             .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(gaps.s))
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onCLick(characterId)
+            },
         horizontalArrangement = Arrangement.Absolute.Left,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -63,6 +70,7 @@ fun CharacterListItem(
         CharacterInfo(
             alias = characterName,
             actorName = actorName,
+            species = species,
         )
     }
 }
@@ -71,6 +79,7 @@ fun CharacterListItem(
 private fun CharacterInfo(
     alias: String,
     actorName: String,
+    species: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -88,6 +97,11 @@ private fun CharacterInfo(
             color = MaterialTheme.colorScheme.secondary,
             fontSize = textSizes.s,
         )
+        Text(
+            text = species,
+            color = MaterialTheme.colorScheme.secondary,
+            fontSize = textSizes.s,
+        )
     }
 }
 
@@ -96,28 +110,34 @@ private fun LoadImageFromUrl(
     url: String,
     houseColor: Color = MaterialTheme.colorScheme.surface,
 ) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .crossfade(true)
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .error(R.drawable.ic_launcher_foreground)
-            .build(),
-        contentDescription = "CharacterImage",
-        modifier = Modifier
-            .chargeGlow(
-                radiusPx = 200f,
-                colorStops = listOf(houseColor)
-            )
-            .padding(gaps.xs)
-            .clip(RoundedCornerShape(32.dp))
-            .size(70.dp),
+    Box(
+       modifier = Modifier
+           .padding(gaps.xxs)
+           .size(80.dp)
+           .chargeGlow(
+               radiusPx = 200f,
+               colorStops = listOf(houseColor)
+           ),
+        contentAlignment = Alignment.Center
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(url)
+                .crossfade(true)
+                .placeholder(R.drawable.ic_place_holder_image_48dp)
+                .error(R.drawable.ic_place_holder_image_48dp)
+                .build(),
+            contentDescription = "CharacterImage",
+            modifier = Modifier
+                .clip(RoundedCornerShape(32.dp))
+                .size(70.dp),
 
-    )
+            )
+    }
 }
 
 @Composable
-private fun fetchHouseColor(houseName: String): Color {
+fun fetchHouseColor(houseName: String): Color {
     return when(houseName) {
         stringResource(R.string.house_gryffindor) -> Gryffindor
         stringResource(R.string.house_slytherine) -> Slytherin
@@ -141,7 +161,10 @@ internal fun PreviewCharacterListItem() {
                 characterImage = "",
                 actorName = "Daniel Radcliff",
                 characterName = "Harry Potter",
-                characterHouse = stringResource(R.string.house_gryffindor)
+                characterHouse = stringResource(R.string.house_gryffindor),
+                characterId = "",
+                species = "",
+                onCLick = {}
             )
         }
 

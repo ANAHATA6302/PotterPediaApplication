@@ -1,7 +1,9 @@
 package com.akshit.datacore
 
 import android.content.Context
+import com.google.ar.core.exceptions.FatalException
 import com.google.gson.Gson
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -13,44 +15,52 @@ class CharacterRepository (
         Context.MODE_PRIVATE
     )
 
+    /**
+     * Fetches data from API
+     * @throws [FatalException] if there is an error
+     */
     suspend fun fetchCharacters(): List<Character?> {
         val cacheData = getCacheData()
-        // also need to add the option to rewrite data to avoid duplication
-        // i.e when a new fetch is done or user manually asks a refresh of data
-        return if (cacheData.isEmpty()) {
+        return cacheData.ifEmpty {
             val characters = fetchFromApi()
             cacheData(characters)
             characters
-        } else {
-            cacheData
         }
     }
 
-    suspend fun updateCache(): List<Character?> {
-        return if (!getCacheData().isEmpty()) {
-            val data = fetchFromApi()
-            sharedPreferences.edit().clear().apply()
-            cacheData(characters = data)
-            data
-        } else {
-            emptyList()
+    /**
+     * Updates data in the cache and fetches from API
+     * @throws [FatalException] if there is an error
+     */
+    suspend fun updateCache() {
+        try {
+            val characters = fetchFromApi()
+            if (characters.isNotEmpty()) {
+                clearCache()
+                cacheData(characters)
+            }
+        } catch (e: Exception) {
+            throw FatalException()
         }
-
     }
 
-    // Fetch from API
+
     private suspend fun fetchFromApi(): List<Character?> {
         return withContext(Dispatchers.IO) {
-            RetrofitInstance.apiService.getAllCharacters().map {
-                it.toCharacterData()
+            try {
+                RetrofitInstance.apiService.getAllCharacters().map {
+                    it.toCharacterData()
+                }
+            } catch (e: Exception) {
+                throw FatalException()
             }
+
         }
     }
 
-    // Cache the fetched data in SharedPreferences
-    private fun cacheData(characters: List<Character?>) {
+   private fun cacheData(characters: List<Character?>) {
         sharedPreferences.edit().apply {
-            putString("cached_characters", Gson().toJson(characters))
+            putString(STORAGE_KEY, Gson().toJson(characters))
             apply()
         }
     }
@@ -59,9 +69,8 @@ class CharacterRepository (
         sharedPreferences.edit().clear().apply()
     }
 
-    // Get cached data
     private fun getCacheData(): List<Character> {
-        val json = sharedPreferences.getString("cached_characters", null)
+        val json = sharedPreferences.getString(STORAGE_KEY, null)
         return if (json != null) {
             Gson().fromJson(json, Array<Character>::class.java).toList()
         } else {
@@ -71,5 +80,6 @@ class CharacterRepository (
 
     companion object {
         private const val PREFERENCE_KEY = "character_cache"
+        private const val STORAGE_KEY = "cached_characters"
     }
 }

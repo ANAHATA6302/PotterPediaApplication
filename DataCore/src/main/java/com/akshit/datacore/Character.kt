@@ -11,7 +11,6 @@ package com.akshit.datacore
  *  @param [dateOfBirth] character's dat of birth
  *  @param [patronus] character's charm, can be nullable
  *  @param [alive] if they are alive
- *  @param [wand] character's wand and all details
  *  @param [imageUrl] character's image, can be null
  */
 class Character (
@@ -24,12 +23,5 @@ class Character (
     val dateOfBirth: String?,
     val patronus: String?,
     val alive: String?,
-    val wand: Wand?,
     val imageUrl: String? = null
-)
-
-class Wand(
-    val wood: String,
-    val core: String,
-    val length: String,
 )

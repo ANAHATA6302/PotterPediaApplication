@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.akshit.potterpedia.R
@@ -44,6 +45,7 @@ private const val ROLLING_EXIT_ANIMATION_DURATION = 200
 @Composable
 fun TopNavigationScaffold(
     modifier: Modifier = Modifier,
+    backgroundColor: Color = MaterialTheme.colorScheme.background,
     navigationIcon: @Composable TopNavigationIconContentScope.() -> Unit = {},
     title: @Composable TopNavigationTitleContentScope.() -> Unit = {},
     actions: @Composable TopNavigationIconContentScope.() -> Unit = {},
@@ -53,7 +55,7 @@ fun TopNavigationScaffold(
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(TOP_NAVIGATION_MIN_HEIGHT, 120.dp)
-            .background(color = MaterialTheme.colorScheme.background)
+            .background(color = backgroundColor)
             .padding(
                 start = gaps.xl,
                 end = gaps.xl,
@@ -144,6 +146,7 @@ interface TopNavigationTitleContentScope {
             text = text,
             color = color,
             maxLines = 1,
+            style = MaterialTheme.typography.labelLarge,
             textAlign = TextAlign.Center,
         )
     }
@@ -164,6 +167,7 @@ interface TopNavigationTitleContentScope {
                     .basicMarquee(velocity = MARQUEE_VELOCITY),
                 text = targetState.text,
                 textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Normal),
                 color = targetState.color,
                 maxLines = 1,
             )

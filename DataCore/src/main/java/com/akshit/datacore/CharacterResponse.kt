@@ -2,8 +2,6 @@ package com.akshit.datacore
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.time.DayOfWeek
-import java.time.LocalTime
 
 @Serializable
 data class CharacterResponse(
@@ -60,7 +58,6 @@ data class CharacterResponse(
                 dateOfBirth = dateOfBirth,
                 patronus = patronus,
                 alive = alive,
-                wand = wand?.toWandData(),
                 imageUrl = image
             )
         } else {
@@ -77,12 +74,4 @@ data class WandResponse(
     val core: String? = null,
     @SerialName("length")
     val length: String? = null,
-) {
-    fun toWandData(): Wand? {
-        return if (wood != null && core != null && length != null) {
-            Wand(wood, core, length)
-        } else {
-            null
-        }
-    }
-}
+)
