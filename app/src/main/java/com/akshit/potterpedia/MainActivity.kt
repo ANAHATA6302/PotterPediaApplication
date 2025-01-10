@@ -9,7 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import characterInfo.ui.CharacterInfoScreen
 import com.akshit.potterpedia.common.ui.NavigationRoutes
+import helpPage.ui.HelpInfoScreen
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin
 
@@ -27,10 +29,16 @@ class MainActivity : ComponentActivity() {
             navHostController = rememberNavController()
             NavHost(navController = navHostController, startDestination = NavigationRoutes.LANDING_SCREEN.route) {
                 composable(NavigationRoutes.LANDING_SCREEN.route) { LandingScreen(navHostController) }
-                composable(NavigationRoutes.CHARACTER_INFO_SCREEN.route) {  }
+                composable(NavigationRoutes.CHARACTER_INFO_SCREEN.route) {backStackEntry ->
+                    backStackEntry.arguments?.getString("characterId")?.let {
+                        CharacterInfoScreen(
+                            navHostController = navHostController,
+                            characterId = it
+                        )
+                    }
+                }
+                composable(NavigationRoutes.HELP_INFO_SCREEN.route) { HelpInfoScreen(navHostController) }
             }
         }
     }
 }
-
-

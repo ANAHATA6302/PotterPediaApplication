@@ -1,10 +1,20 @@
 <resources>
     <string name="app_name">PotterPedia</string>
     <string name="navbar_title">Potter Pedia</string>
+    <string name="help_info_title">Guide</string>
     <string name="navbar_sub_title">Your one stop destination to all information about Harry Potter Characters</string>
     <string name="house_gryffindor">Gryffindor</string>
     <string name="house_slytherine">Slytherin</string>
     <string name="house_hufflepuff">Hufflepuff</string>
     <string name="house_ravenclaw">Ravenclaw</string>
+    <string name="house_unlisted">Unlisted</string>
     <string name="search_hint">Search…</string>
+    <string name="title_name">Name:</string>
+    <string name="title_actor_name">Actor:</string>
+    <string name="title_species">Species:</string>
+    <string name="title_gender">Gender:</string>
+    <string name="title_house">House:</string>
+    <string name="title_date_of_birth">DOB:</string>
+    <string name="title_patronus">Patronus:</string>
+    <string name="title_alive">Alive:</string>
 </resources>
