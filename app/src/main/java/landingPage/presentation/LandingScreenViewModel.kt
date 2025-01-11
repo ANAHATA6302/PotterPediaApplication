@@ -13,9 +13,6 @@ import kotlinx.coroutines.launch
 
 data class LandingScreenUiState(
     val characterList: List<Character?> = emptyList(),
-    val imageUrl: String = "",
-    val characterName: String = "",
-    val actorName: String = "",
     val isListLoaded: Boolean = false,
 )
 
