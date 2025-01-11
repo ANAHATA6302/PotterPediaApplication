@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.akshit.potterpedia"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.akshit.potterpedia"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
