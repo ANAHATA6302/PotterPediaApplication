@@ -31,6 +31,7 @@ Composable UIs: Dynamic and reactive UIs built with Jetpack Compose.
 📖 How to Build and Run
 Clone the Repository:
 git clone: https://github.com/ANAHATA6302/PotterPediaApplication.git
+
 Open the Project: Open the project in Android Studio.
 Build and Run: Sync the Gradle files and build the project.
 
