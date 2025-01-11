@@ -72,6 +72,7 @@ data class TextSizes(
     val l: TextUnit = 20.sp,
     val xl: TextUnit = 24.sp,
     val xxl: TextUnit = 28.sp,
+    val xxxl: TextUnit = 32.sp
 )
 
 val textSizes = TextSizes()

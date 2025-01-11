@@ -37,9 +37,19 @@ import com.akshit.potterpedia.common.ui.TopNavigationTitleContentScope
 import com.akshit.potterpedia.common.ui.chargeGlow
 import com.akshit.potterpedia.ui.theme.PotterPediaTheme
 import com.akshit.potterpedia.ui.theme.gaps
+import com.akshit.potterpedia.ui.theme.textSizes
 import landingPage.ui.fetchHouseColor
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import java.text.SimpleDateFormat
+import java.util.Locale
+
+private val ROLLING_SUBTITLE_WIDTH = 200.dp
+private val CHARACTER_IMAGE_BOX_SIZE = 170.dp
+private val CHARACTER_IMAGE_SIZE = 150.dp
+private const val BLUR_SIZE = 180f
+private val IMAGE_CORNER_RADIUS = 45.dp
+private val TEXT_LINE_HEIGHT = 34.sp
 
 @Composable
 fun CharacterInfoScreen(
@@ -70,13 +80,13 @@ fun CharacterInfoScreen(
                                 text = stringResource(R.string.navbar_sub_title),
                                 MaterialTheme.colorScheme.secondary
                             ),
-                            Modifier.width(200.dp)
+                            Modifier.width(ROLLING_SUBTITLE_WIDTH)
                         )
                     }
                 },
                 navigationIcon = {
                     BackButton(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(gaps.xl),
                         onClick = {
                             navHostController.popBackStack()
                         }
@@ -100,10 +110,10 @@ fun CharacterInfoScreen(
 private fun CharacterImage(url: String, houseColor: Color) {
     Box(
         modifier = Modifier
-            .size(170.dp)
+            .size(CHARACTER_IMAGE_BOX_SIZE)
             .padding(gaps.xxs)
             .chargeGlow(
-                radiusPx = 180f,
+                radiusPx = BLUR_SIZE,
                 colorStops = listOf(houseColor)
             ),
         contentAlignment = Alignment.BottomCenter
@@ -117,8 +127,8 @@ private fun CharacterImage(url: String, houseColor: Color) {
                 .build(),
             contentDescription = "CharacterImage",
             modifier = Modifier
-                .clip(RoundedCornerShape(45.dp))
-                .size(150.dp),
+                .clip(RoundedCornerShape(IMAGE_CORNER_RADIUS))
+                .size(CHARACTER_IMAGE_SIZE),
 
             )
     }
@@ -132,9 +142,9 @@ private fun CharacterName(
     Text(
         text = name,
         modifier = modifier,
-        fontSize = 32.sp,
+        fontSize = textSizes.xxxl,
         style = MaterialTheme.typography.labelLarge.copy(
-            lineHeight = 34.sp
+            lineHeight = TEXT_LINE_HEIGHT
         ),
         color = MaterialTheme.colorScheme.primary
     )
@@ -158,10 +168,9 @@ private fun BuildInfoDeck(
                 )
             }
             if (!uiState.dateOfBirth.isNullOrEmpty()) {
-                // need to format it is DD-MMM-YYYY
                 InfoCardTileItem(
                     title = stringResource(R.string.title_date_of_birth),
-                    info = uiState.dateOfBirth
+                    info = fetchFormatedDateOfBirth(uiState.dateOfBirth)
                 )
             }
             if (!uiState.species.isNullOrEmpty()) {
@@ -196,4 +205,14 @@ private fun BuildInfoDeck(
             }
         }
     }
+}
+
+private fun fetchFormatedDateOfBirth(doB: String): String {
+    val inputFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+    val outputFormatter = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+
+    val date = inputFormatter.parse(doB)
+    val outputDate = date?.let { outputFormatter.format(it) }
+
+    return outputDate?: doB
 }

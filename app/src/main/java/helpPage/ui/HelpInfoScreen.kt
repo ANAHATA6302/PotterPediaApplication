@@ -60,7 +60,7 @@ fun HelpInfoScreen(
                 },
                 navigationIcon = {
                     BackButton(
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(gaps.xl),
                         onClick = {
                             navHostController.popBackStack()
                         }
@@ -72,7 +72,7 @@ fun HelpInfoScreen(
             ) {
                 Text(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(gaps.xs))
                         .padding(gaps.xxs),
                     text = "Color Guide to House Identification",
                     style = MaterialTheme.typography.labelLarge,
@@ -108,7 +108,7 @@ private fun HouseColorGuideComponent(
         modifier = Modifier
             .padding(horizontal = gaps.xl)
             .padding(vertical = gaps.s)
-            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(gaps.xs))
             .padding(gaps.xxs)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Absolute.Left,
