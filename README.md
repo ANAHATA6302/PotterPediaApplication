@@ -25,7 +25,7 @@ Coil (AsyncImage): Efficient image loading.
 PotterPedia is built with a clean, modular, and scalable architecture for maintainability and ease of extension. The core principles include:
 
 Min SDK - 28
-Compile/Target SDK - 35
+Compile/Target SDK - 34
 MVVM (Model-View-ViewModel): Separation of concerns for better testability and maintainability.
 Offline-First Approach: Cached data is prioritized for faster load times and offline support.
 Dependency Injection: Handled using Koin for a loosely coupled and testable codebase.
