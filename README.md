@@ -2,11 +2,13 @@
 Harry Potter Character Encyclopedia
 
 🌟 **PotterPedia**
+
 PotterPedia is an Android application built using Jetpack Compose that lists characters fetched from an API, allowing users to view their info. 
 This offline-first application ensures data is available even without an internet connection. 
 With a search bar for quick lookups, dark/light themes for personal preferences and scalable architecture, it's designed for an optimal user experience.
 
 📱 **Features**
+
 Character Listing: View a list of characters fetched from the API on the home screen.
 Character Details: Tap on a character to navigate to an info page with more details.
 Offline-First: Data is cached locally for seamless offline usage.
@@ -19,6 +21,7 @@ Koin: Dependency injection made simple.
 Coil (AsyncImage): Efficient image loading.
 
 🎯 **App Architecture**
+
 PotterPedia is built with a clean, modular, and scalable architecture for maintainability and ease of extension. The core principles include:
 
 Min SDK - 24
@@ -29,6 +32,7 @@ Dependency Injection: Handled using Koin for a loosely coupled and testable code
 Composable UIs: Dynamic and reactive UIs built with Jetpack Compose.
 
 📖 **How to Build and Run**
+
 Clone the Repository:
 git clone: https://github.com/ANAHATA6302/PotterPediaApplication.git
 
@@ -36,6 +40,7 @@ Open the Project: Open the project in Android Studio.
 Build and Run: Sync the Gradle files and build the project.
 
 🌟 **Future Plans**
+
 Error Handling: Display snackbars to notify users when data fetching fails.
 UI Enhancements: Introduce animations and better visuals for a richer user experience.
 Pagination: Implement pagination for larger datasets.
