@@ -1,1 +1,0 @@
-/Users/anahata/AndroidStudioProjects/PotterPediaApplication/DataCore/src/main/cpp/CMakeLists.txt
