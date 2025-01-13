@@ -21,11 +21,8 @@ Scalable Architecture: Designed for future scalability and feature additions.
 
 Modern Libraries and Tools:
 Jetpack Compose: For a modern, declarative UI.
-
 Retrofit: For network requests.
-
 Koin: Dependency injection made simple.
-
 Coil (AsyncImage): Efficient image loading.
 
 
