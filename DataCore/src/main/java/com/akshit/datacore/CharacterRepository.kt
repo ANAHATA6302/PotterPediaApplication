@@ -1,14 +1,15 @@
 package com.akshit.datacore
 
 import android.content.Context
+import com.akshit.datacore.model.Character
+import com.akshit.datacore.retrofitService.HarryPotterServiceHandler
 import com.google.ar.core.exceptions.FatalException
 import com.google.gson.Gson
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 class CharacterRepository (
-    context: Context
+    context: Context,
+    private val handler: HarryPotterServiceHandler,
+    private val gson: Gson,
 ) {
     private val sharedPreferences = context.getSharedPreferences(
         PREFERENCE_KEY,
@@ -22,7 +23,7 @@ class CharacterRepository (
     suspend fun fetchCharacters(): List<Character?> {
         val cacheData = getCacheData()
         return cacheData.ifEmpty {
-            val characters = fetchFromApi()
+            val characters = handler.execute()
             cacheData(characters)
             characters
         }
@@ -34,7 +35,7 @@ class CharacterRepository (
      */
     suspend fun updateCache() {
         try {
-            val characters = fetchFromApi()
+            val characters = handler.execute()
             if (characters.isNotEmpty()) {
                 clearCache()
                 cacheData(characters)
@@ -44,23 +45,9 @@ class CharacterRepository (
         }
     }
 
-
-    private suspend fun fetchFromApi(): List<Character?> {
-        return withContext(Dispatchers.IO) {
-            try {
-                RetrofitInstance.apiService.getAllCharacters().map {
-                    it.toCharacterData()
-                }
-            } catch (e: Exception) {
-                throw FatalException()
-            }
-
-        }
-    }
-
    private fun cacheData(characters: List<Character?>) {
         sharedPreferences.edit().apply {
-            putString(STORAGE_KEY, Gson().toJson(characters))
+            putString(STORAGE_KEY, gson.toJson(characters))
             apply()
         }
     }
@@ -72,7 +59,7 @@ class CharacterRepository (
     private fun getCacheData(): List<Character> {
         val json = sharedPreferences.getString(STORAGE_KEY, null)
         return if (json != null) {
-            Gson().fromJson(json, Array<Character>::class.java).toList()
+            gson.fromJson(json, Array<Character>::class.java).toList()
         } else {
             emptyList()
         }

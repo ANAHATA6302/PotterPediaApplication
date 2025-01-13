@@ -2,7 +2,7 @@ package com.akshit.potterpedia
 
 import android.util.Log
 
-import com.akshit.datacore.Character
+import com.akshit.datacore.model.Character
 import com.akshit.datacore.CharacterRepository
 import com.google.ar.core.exceptions.FatalException
 import io.mockk.Runs
@@ -28,7 +28,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class LandingScreenViewModelTest {
+class  LandingScreenViewModelTest {
     private val testCoroutineRule = UnconfinedTestDispatcher()
 
     private val charList: List<Character> = listOf(

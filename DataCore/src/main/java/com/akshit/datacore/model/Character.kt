@@ -1,4 +1,4 @@
-package com.akshit.datacore
+package com.akshit.datacore.model
 
 /**
  *  A data class that holds all the data for the character

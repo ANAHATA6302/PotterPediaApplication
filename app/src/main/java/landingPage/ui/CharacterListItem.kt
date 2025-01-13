@@ -87,21 +87,27 @@ private fun CharacterInfo(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ) {
-        Text(
-            text = alias,
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = textSizes.m,
-        )
-        Text(
-            text = actorName,
-            color = MaterialTheme.colorScheme.secondary,
-            fontSize = textSizes.s,
-        )
-        Text(
-            text = species,
-            color = MaterialTheme.colorScheme.secondary,
-            fontSize = textSizes.s,
-        )
+        if (alias.isNotBlank()) {
+            Text(
+                text = alias,
+                color = MaterialTheme.colorScheme.primary,
+                fontSize = textSizes.m,
+            )
+        }
+        if (actorName.isNotBlank()) {
+            Text(
+                text = actorName,
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = textSizes.s,
+            )
+        }
+        if (species.isNotBlank()) {
+            Text(
+                text = species,
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = textSizes.s,
+            )
+        }
     }
 }
 
@@ -163,7 +169,7 @@ internal fun PreviewCharacterListItem() {
                 characterName = "Harry Potter",
                 characterHouse = stringResource(R.string.house_gryffindor),
                 characterId = "",
-                species = "",
+                species = "human",
                 onCLick = {}
             )
         }

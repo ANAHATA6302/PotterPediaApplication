@@ -41,7 +41,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.akshit.datacore.Character
+import com.akshit.datacore.model.Character
 import com.akshit.potterpedia.R
 import com.akshit.potterpedia.common.ui.NavigationRoutes
 import com.akshit.potterpedia.common.ui.TopNavigationScaffold

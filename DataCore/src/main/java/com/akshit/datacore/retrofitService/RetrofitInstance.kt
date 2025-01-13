@@ -1,13 +1,7 @@
-package com.akshit.datacore
+package com.akshit.datacore.retrofitService
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-
-interface HarryPotterService {
-    @GET("characters")
-    suspend fun getAllCharacters(): List<CharacterResponse>
-}
 
 object RetrofitInstance {
     val apiService: HarryPotterService by lazy {

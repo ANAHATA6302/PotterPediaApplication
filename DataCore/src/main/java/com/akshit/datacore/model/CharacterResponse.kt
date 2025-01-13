@@ -1,4 +1,4 @@
-package com.akshit.datacore
+package com.akshit.datacore.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

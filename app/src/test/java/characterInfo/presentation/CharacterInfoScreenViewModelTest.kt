@@ -1,7 +1,7 @@
 package characterInfo.presentation
 
 import android.util.Log
-import com.akshit.datacore.Character
+import com.akshit.datacore.model.Character
 import com.akshit.datacore.CharacterRepository
 import com.google.ar.core.exceptions.FatalException
 import io.mockk.coEvery

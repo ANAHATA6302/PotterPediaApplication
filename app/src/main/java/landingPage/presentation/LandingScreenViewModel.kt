@@ -3,7 +3,7 @@ package landingPage.presentation
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.akshit.datacore.Character
+import com.akshit.datacore.model.Character
 import com.akshit.datacore.CharacterRepository
 import com.google.ar.core.exceptions.FatalException
 import kotlinx.coroutines.flow.MutableStateFlow
