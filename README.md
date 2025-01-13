@@ -20,9 +20,13 @@ Search Functionality: Search characters quickly by their actor name or character
 Scalable Architecture: Designed for future scalability and feature additions.
 
 Modern Libraries and Tools:
+
 Jetpack Compose: For a modern, declarative UI.
+
 Retrofit: For network requests.
+
 Koin: Dependency injection made simple.
+
 Coil (AsyncImage): Efficient image loading.
 
 
@@ -30,12 +34,14 @@ Coil (AsyncImage): Efficient image loading.
 
 PotterPedia is built with a clean, modular, and scalable architecture for maintainability and ease of extension. The core principles include:
 
-Min SDK - 28
-Compile/Target SDK - 34
-MVVM (Model-View-ViewModel): Separation of concerns for better testability and maintainability.
-Offline-First Approach: Cached data is prioritized for faster load times and offline support.
-Dependency Injection: Handled using Koin for a loosely coupled and testable codebase.
-Composable UIs: Dynamic and reactive UIs built with Jetpack Compose.
+**Min SDK -** 28
+
+**Compile/Target SDK -** 34
+
+**MVVM (Model-View-ViewModel):** Separation of concerns for better testability and maintainability.
+**Offline-First Approach:** Cached data is prioritized for faster load times and offline support.
+**Dependency Injection:** Handled using Koin for a loosely coupled and testable codebase.
+**Composable UIs:** Dynamic and reactive UIs built with Jetpack Compose.
 
 📖 **How to Build and Run**
 
@@ -47,9 +53,9 @@ Build and Run: Sync the Gradle files and build the project.
 
 🌟 **Future Plans**
 
-Error Handling: Display snackbars to notify users when data fetching fails.
-UI Enhancements: Introduce animations and better visuals for a richer user experience.
-Pagination: Implement pagination for larger datasets.
-Unit and UI Tests: Add comprehensive test coverage using JUnit and Compose testing libraries.
-Improved ktLint and detekt: adding more comprehensive cases for detekt and lint to maintain code standards and practice.
-Pipeline integration and rules: Adding rules before commits and merge to have a sanitized code.
+**Error Handling:** Display snackbars to notify users when data fetching fails.
+**UI Enhancements:** Introduce animations and better visuals for a better user experience.
+**Pagination:** Implement pagination for larger datasets.
+**Unit and UI Tests:** Add comprehensive test coverage using JUnit and Compose testing libraries.
+**Improved ktLint and detekt:** adding more comprehensive cases for detekt and lint to maintain code standards and practice.
+**Pipeline integration and rules:** Adding rules before commits and merge to have a sanitized code.
