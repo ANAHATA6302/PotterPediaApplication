@@ -10,15 +10,24 @@ With a search bar for quick lookups, dark/light themes for personal preferences 
 📱 **Features**
 
 Character Listing: View a list of characters fetched from the API on the home screen.
+
 Character Details: Tap on a character to navigate to an info page with more details.
+
 Offline-First: Data is cached locally for seamless offline usage.
+
 Search Functionality: Search characters quickly by their actor name or character name.
+
 Scalable Architecture: Designed for future scalability and feature additions.
+
 Modern Libraries and Tools:
 Jetpack Compose: For a modern, declarative UI.
+
 Retrofit: For network requests.
+
 Koin: Dependency injection made simple.
+
 Coil (AsyncImage): Efficient image loading.
+
 
 🎯 **App Architecture**
 
