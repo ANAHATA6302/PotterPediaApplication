@@ -62,11 +62,13 @@ fun CharacterListItem(
         horizontalArrangement = Arrangement.Absolute.Left,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        LoadImageFromUrl(
-            url = characterImage,
-            houseColor = fetchHouseColor(characterHouse)
-        )
-        Spacer(Modifier.width(gaps.xs))
+        if (characterImage.isNotBlank()) {
+            LoadImageFromUrl(
+                url = characterImage,
+                houseColor = fetchHouseColor(characterHouse)
+            )
+            Spacer(Modifier.width(gaps.xs))
+        }
         CharacterInfo(
             alias = characterName,
             actorName = actorName,

@@ -12,7 +12,8 @@
         android:roundIcon="@drawable/ic_golden_snitch_24dp"
         android:supportsRtl="true"
         android:theme="@style/Theme.PotterPedia"
-        tools:targetApi="31">
+        tools:targetApi="35">
+        <meta-data android:name="com.google.ar.core" android:value="optional" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.akshit.datacore"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
-        minSdk = 28
+        minSdk = 21
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
