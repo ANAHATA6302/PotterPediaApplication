@@ -16,6 +16,7 @@ enum class NavigationRoutes(val route: String) {
      */
     HELP_INFO_SCREEN("HelpInfoScreen"),
 }
+
 fun buildScreen2Route(id: String): String {
     return "CharacterInfoScreen/$id"
 }
