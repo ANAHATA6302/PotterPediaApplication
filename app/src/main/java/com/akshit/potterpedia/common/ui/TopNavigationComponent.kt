@@ -49,7 +49,6 @@ fun TopNavigationScaffold(
     navigationIcon: @Composable TopNavigationIconContentScope.() -> Unit = {},
     title: @Composable TopNavigationTitleContentScope.() -> Unit = {},
     actions: @Composable TopNavigationIconContentScope.() -> Unit = {},
-
     ) {
     Row(
         modifier = Modifier

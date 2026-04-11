@@ -108,29 +108,31 @@ fun CharacterInfoScreen(
 
 @Composable
 private fun CharacterImage(url: String, houseColor: Color) {
-    Box(
-        modifier = Modifier
-            .size(CHARACTER_IMAGE_BOX_SIZE)
-            .padding(gaps.xxs)
-            .chargeGlow(
-                radiusPx = BLUR_SIZE,
-                colorStops = listOf(houseColor)
-            ),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(url)
-                .crossfade(true)
-                .placeholder(R.drawable.ic_place_holder_image_48dp)
-                .error(R.drawable.ic_place_holder_image_48dp)
-                .build(),
-            contentDescription = "CharacterImage",
+    if (url.isNotBlank()){
+        Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(IMAGE_CORNER_RADIUS))
-                .size(CHARACTER_IMAGE_SIZE),
+                .size(CHARACTER_IMAGE_BOX_SIZE)
+                .padding(gaps.xxs)
+                .chargeGlow(
+                    radiusPx = BLUR_SIZE,
+                    colorStops = listOf(houseColor)
+                ),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(url)
+                    .crossfade(true)
+                    .placeholder(R.drawable.ic_place_holder_image_48dp)
+                    .error(R.drawable.ic_place_holder_image_48dp)
+                    .build(),
+                contentDescription = "CharacterImage",
+                modifier = Modifier
+                    .clip(RoundedCornerShape(IMAGE_CORNER_RADIUS))
+                    .size(CHARACTER_IMAGE_SIZE),
 
-            )
+                )
+        }
     }
 }
 
